@@ -53,14 +53,14 @@ def test_self_check_db_positive_enable(test_db):
 
     test_db.sites[0].disabled = True
     test_db.sites[0].username_claimed = 'Skyeng'
-    assert test_db.sites[0].disabled is True
+    assert test_db.sites[0].disabled
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(
         self_check(test_db, test_db.sites_dict, logger, silent=True)
     )
 
-    assert test_db.sites[0].disabled is False
+    assert not test_db.sites[0].disabled
 
 
 @pytest.mark.slow
@@ -68,14 +68,14 @@ def test_self_check_db_negative_disabled(test_db):
     logger = Mock()
 
     test_db.sites[0].disabled = True
-    assert test_db.sites[0].disabled is True
+    assert test_db.sites[0].disabled
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(
         self_check(test_db, test_db.sites_dict, logger, silent=True)
     )
 
-    assert test_db.sites[0].disabled is True
+    assert test_db.sites[0].disabled
 
 
 @pytest.mark.slow
@@ -84,14 +84,14 @@ def test_self_check_db_negative_enabled(test_db):
 
     test_db.sites[0].disabled = False
     test_db.sites[0].username_claimed = 'Skyeng'
-    assert test_db.sites[0].disabled is False
+    assert not test_db.sites[0].disabled
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(
         self_check(test_db, test_db.sites_dict, logger, silent=True)
     )
 
-    assert test_db.sites[0].disabled is False
+    assert not test_db.sites[0].disabled
 
 
 @pytest.mark.slow
